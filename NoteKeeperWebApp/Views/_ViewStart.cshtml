@@ -1,0 +1,13 @@
+﻿@{
+    string layout = "";
+    string emailID = (string)Session["User"];
+    if (emailID == null)
+    {
+        layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        layout = "~/Views/Shared/_LayoutSecured.cshtml";
+    }
+    Layout = layout;
+}

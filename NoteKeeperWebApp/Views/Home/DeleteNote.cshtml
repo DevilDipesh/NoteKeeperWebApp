@@ -1,0 +1,72 @@
+﻿@model NoteKeeperWebApp.Note
+
+@{
+    ViewBag.Title = "DeleteNote";
+}
+
+<h2>DeleteNote</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Note</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NotesID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotesID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.share)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.share)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostedBy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("DeleteNoteConfirm","Home", Model)) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,75 @@
+﻿@model NoteKeeperWebApp.Models.ViewNote
+
+@{
+    ViewBag.Title = "GetNotesByID";
+}
+
+<h2>Note Description:</h2>
+
+<div>
+    <h4>View Note</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NotesID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotesID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note1)
+        </dd>
+
+        @if (Model.PostedBy == (string)Session["User"])
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.shared_With)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.shared_With)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostDate)
+        </dd>
+
+    </dl>
+</div>
+@if (Model.PostedBy == (string)Session["User"])
+{
+    <p>
+        @Html.ActionLink("Edit", "updateNote", new { ID = Model.NotesID }) |
+        @Html.ActionLink("Back to List", "GetNotes")
+    </p>
+}
+else if (Model.shared_With == (string)Session["User"])
+{
+    <p>
+        @Html.ActionLink("Edit", "updateNote", new { ID = Model.NotesID }) |
+        @Html.ActionLink("Back to List", "GetNotes")
+    </p>
+}
+else
+{
+    @Html.ActionLink("Back to List", "GetNotes")
+}
+

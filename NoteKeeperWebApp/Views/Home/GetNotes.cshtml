@@ -1,0 +1,83 @@
+﻿@model IEnumerable<NoteKeeperWebApp.Models.ViewNotes>
+
+@{
+    ViewBag.Title = "GetNotes";
+}
+
+<h2>Notes List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddNote","Home")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NotesID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Note1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.shared_With)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.NotesID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Note1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    @if (item.PostedBy == (string)Session["User"])
+    {
+        <td>
+            @Html.DisplayFor(modelItem => item.shared_With)
+        </td>
+    }
+    else
+    {
+        <td>
+            @Html.Display("null")
+        </td>
+    }
+    <td>
+        @Html.DisplayFor(modelItem => item.PostDate)
+    </td>
+    @if (item.PostedBy == (string)Session["User"])
+    {
+        <td>
+            @Html.ActionLink("Edit", "updateNote", new { ID = item.NotesID }) |
+            @Html.ActionLink("Details", "GetNotesByID", new { ID = item.NotesID }) |
+            @Html.ActionLink("Delete", "DeleteNote", new { ID = item.NotesID })
+        </td>
+    }
+    else if (item.shared_With == ((string)Session["User"]))
+    {
+        <td>
+            @Html.ActionLink("Edit", "updateNote", new { ID = item.NotesID }) |
+            @Html.ActionLink("Details", "GetNotesByID", new { ID = item.NotesID })
+        </td>
+    }
+    else
+    {
+        <td>
+            @Html.ActionLink("Details", "GetNotesByID", new { ID = item.NotesID })
+        </td>
+    }
+
+</tr>
+}
+
+</table>

@@ -1,0 +1,84 @@
+﻿@model NoteKeeperWebApp.Models.RegisterUser
+
+@{
+    ViewBag.Title = "Register";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+        $("#Email").change(function () {
+            var email = $("#Email").val();
+
+            if (email !== "") {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("EmailExists", "Account")",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{emailID:"' + email + '"}',
+                    success: function (data) {
+                        if (data) {
+                            $("#msg").html("Email already exists please try another Email");
+                        }
+                        else {
+                            $("#msg").html("");
+                            $("#submitBtn").removeAttr("disabled");
+                        }
+                    }
+                });
+            }
+        })
+    })
+</script>
+
+
+<h2>Register</h2>
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Register yourself here</h4>
+    <hr />
+    <span id="msg" class="col-md-offset-2" style="color:red"></span>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" id="submitBtn" disabled />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to Login", "Login","Account")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
